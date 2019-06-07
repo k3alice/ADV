@@ -176,7 +176,6 @@ namespace Game
                     Next();
                     nowline++;
                     timer = 0;
-                    //
                 }
             }
 
