@@ -146,7 +146,7 @@ namespace Game
                     Next();
                     choosemode = 0;
                 }
-                nowline++;
+                nowline++;//
             }
 
             // スキップ機能
