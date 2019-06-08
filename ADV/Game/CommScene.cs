@@ -14,6 +14,7 @@ namespace Game
         bool skipflag = false;
         bool autoflag = false;
         int timer = 0;
+        asd.TextObject2D state = new asd.TextObject2D();
 
         // 会話のキャラ絵、テキストのインスタンスを追加する
         asd.TextureObject2D chara = new asd.TextureObject2D();
@@ -47,16 +48,20 @@ namespace Game
             }
             else Console.WriteLine("baka");
 
-            // フラグ初期化
-            autoflag = false;
-            skipflag = false;
-
-
             // 2Dを表示するレイヤーのインスタンスを生成する
             asd.Layer2D layer = new asd.Layer2D();
 
             // シーンにレイヤーのインスタンスを追加する
             AddLayer(layer);
+
+            // フラグ初期化
+            autoflag = false;
+            skipflag = false;
+            state.Font = font;
+            state.Position = new asd.Vector2DF(520, 350);
+            state.Scale = new asd.Vector2DF(1, 1);
+            state.Text = "";
+            layer.AddObject(state);
 
             // キャラの初期設定
             chara.Position = new asd.Vector2DF(50, 400);
@@ -153,9 +158,8 @@ namespace Game
             // 未読
             if (asd.Engine.Keyboard.GetKeyState(asd.Keys.LeftControl) == asd.ButtonState.Hold && (nowline < linenum))
             {
-                //while (texts[nowline] != choosenum.ToString()) nowline++;
                 timer++;
-                if(timer > 30)
+                if(timer > 15)
                 {                    
                     Next();
                     nowline++;
@@ -167,11 +171,13 @@ namespace Game
             {
                 skipflag = !skipflag;
                 autoflag = false;
+                if(skipflag) state.Text = "Skip";
+                else state.Text = "";
             }
             if (skipflag && (nowline < linenum))
             {
                 timer++;
-                if(timer > 30)
+                if(timer > 15)
                 {
                     Next();
                     nowline++;
@@ -184,6 +190,8 @@ namespace Game
             {
                 autoflag = !autoflag;
                 skipflag = false;
+                if(autoflag) state.Text = "Auto";
+                else state.Text = "";
             }
             if (autoflag && (nowline < linenum))
             {
@@ -195,6 +203,14 @@ namespace Game
                     timer = 0;
                 }
             }
+
+            // 次の選択肢に移動
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.N) == asd.ButtonState.Push)
+            {
+                while (texts[nowline][0] != '[') nowline++;
+                Next();
+            }
+
         }
 
         string NewLine(string str)
