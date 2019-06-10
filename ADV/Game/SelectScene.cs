@@ -17,7 +17,8 @@ namespace Game
         int charanum;
         int levelnum;
 
-        Button b = new Button("auto",100,100);
+        Button b = new Button("auto",100,100,35, new asd.Color(255, 255, 255, 255));
+        Button c = new Button("skip", 200, 100,35,new asd.Color(255, 255, 255, 255));
 
         // ありすとふみかのインスタンスを追加する
         asd.TextureObject2D alice = new asd.TextureObject2D();
@@ -26,10 +27,10 @@ namespace Game
         string[] charaname = { "alice", "humika" };
 
         // レベルのテキストインスタンスを追加する
-        asd.TextObject2D easy = new asd.TextObject2D();
-        asd.TextObject2D normal = new asd.TextObject2D();
-        asd.TextObject2D hard = new asd.TextObject2D();
-        List<asd.TextObject2D> level = new List<asd.TextObject2D>();
+        Button easy = new Button("EASY", 106, 400, 35,new asd.Color(255, 0, 0, 255));
+        Button normal = new Button("NORMAL", 320, 400, 35, new asd.Color(0, 255, 0, 255));
+        Button hard = new Button("HARD", 522, 400, 35, new asd.Color(0, 0, 255, 255));
+        List<Button> level = new List<Button>();
 
 
         protected override void OnRegistered()
@@ -49,7 +50,6 @@ namespace Game
 
             // レイヤーにオブジェクトのインスタンスを追加する
             //layer.AddObject(background);
-            layer.AddObject(b);
 
             // レイヤーにありすのインスタンスを追加する
             chara.Add(alice);
@@ -67,35 +67,14 @@ namespace Game
 
             // レイヤーにeasyのインスタンスを追加する
             level.Add(easy);
-            var fontE = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 35, new asd.Color(255, 0, 0, 255), 1, new asd.Color(255, 255, 255, 255));
-            easy.Font = fontE;
-            var sizeE = fontE.CalcTextureSize("EASY", asd.WritingDirection.Horizontal);
-            easy.CenterPosition = new asd.Vector2DF(sizeE.X / 2.0f, sizeE.Y / 2.0f);
-            easy.Position = new asd.Vector2DF(106, 400);
-            easy.Scale = new asd.Vector2DF(1, 1);
-            easy.Text = "EASY";
             layer.AddObject(easy);
 
             // レイヤーにnormalのインスタンスを追加する
             level.Add(normal);
-            var fontN = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 35, new asd.Color(0, 255, 0, 255), 1, new asd.Color(255, 255, 255, 255));
-            normal.Font = fontN;
-            var sizeN = fontN.CalcTextureSize("NORMAL", asd.WritingDirection.Horizontal);
-            normal.CenterPosition = new asd.Vector2DF(sizeN.X / 2.0f, sizeN.Y / 2.0f);
-            normal.Position = new asd.Vector2DF(320, 400);
-            normal.Scale = new asd.Vector2DF(1, 1);
-            normal.Text = "NORMAL";
             layer.AddObject(normal);
 
             // レイヤーにhardのインスタンスを追加する
             level.Add(hard);
-            var fontH = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 35, new asd.Color(0, 0, 255, 255), 1, new asd.Color(255, 255, 255, 255));
-            hard.Font = fontH;
-            var sizeH = fontH.CalcTextureSize("HARD", asd.WritingDirection.Horizontal);
-            hard.CenterPosition = new asd.Vector2DF(sizeH.X / 2.0f, sizeH.Y / 2.0f);
-            hard.Position = new asd.Vector2DF(522, 400);
-            hard.Scale = new asd.Vector2DF(1, 1);
-            hard.Text = "HARD";
             layer.AddObject(hard);
         }
 
@@ -162,8 +141,19 @@ namespace Game
                         level[levelnum].Scale = new asd.Vector2DF(1, 1);
                         if (0 < levelnum) levelnum--;
                     }
-                    level[levelnum].Scale = new asd.Vector2DF(1.5f, 1.5f);
+                    
                     break;
+            }
+
+            level[levelnum].Scale = new asd.Vector2DF(1.5f, 1.5f);
+
+            for (int i = 0; i < level.Count; i++)
+            {
+                if (level[i].flg)
+                {
+                    mode = 1;
+                    levelnum = i;
+                }
             }
 
             /*if (asd.Engine.Mouse.Position.X < 320 && asd.Engine.Mouse.LeftButton.ButtonState == asd.ButtonState.Push)

@@ -22,13 +22,11 @@ namespace Game
         string[] texts;
         int linenum = 999;
         int nowline = 0;
-        asd.TextObject2D choose1 = new asd.TextObject2D();
-        asd.TextObject2D choose2 = new asd.TextObject2D();
-        asd.TextObject2D choose3 = new asd.TextObject2D();
-        asd.TextObject2D choose4 = new asd.TextObject2D();
-        asd.Font font = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 32, new asd.Color(255, 255, 255, 255), 1, new asd.Color(127, 0, 0, 255));
-        asd.Font fontC = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 32, new asd.Color(127, 127, 127, 255), 1, new asd.Color(127, 0, 0, 255));
-        List<asd.TextObject2D> choose = new List<asd.TextObject2D>();
+        Button choose1 = new Button("", asd.Engine.WindowSize.X / 2, 75, 22, new asd.Color(127, 127, 127, 255));
+        Button choose2 = new Button("", asd.Engine.WindowSize.X / 2, 150, 22, new asd.Color(127, 127, 127, 255));
+        Button choose3 = new Button("", asd.Engine.WindowSize.X / 2, 225, 22, new asd.Color(127, 127, 127, 255));
+        Button choose4 = new Button("", asd.Engine.WindowSize.X / 2, 300, 22, new asd.Color(127, 127, 127, 255));
+        List<Button> choose = new List<Button>();
         int choosenum;
         int choosecount;
         int choosemode = 0;
@@ -57,7 +55,7 @@ namespace Game
             // フラグ初期化
             autoflag = false;
             skipflag = false;
-            state.Font = font;
+            state.Font = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 35, new asd.Color(255, 255, 255, 255), 1, new asd.Color(255, 255, 255, 255));
             state.Position = new asd.Vector2DF(520, 350);
             state.Scale = new asd.Vector2DF(1, 1);
             state.Text = "";
@@ -69,7 +67,7 @@ namespace Game
             //layer.RemoveObject(chara);
 
             // レイヤーにテキストのインスタンスを追加する
-            text.Font = font;
+            text.Font = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 25, new asd.Color(255, 255, 255, 255), 1, new asd.Color(255, 255, 255, 255));
             text.Position = new asd.Vector2DF(96, 350);
             text.Scale = new asd.Vector2DF(1, 1);
             text.Text = texts[0];
@@ -83,17 +81,9 @@ namespace Game
             choose.Add(choose2);
             choose.Add(choose3);
             choose.Add(choose4);
-            // レイヤーに選択肢のインスタンスを追加する
-            for (int i = 0; i < 4; i++)
-            {
 
-                choose[i].Font = font;
-                //choose[i].CenterPosition = new asd.Vector2DF();
-                choose[i].Position = new asd.Vector2DF(asd.Engine.WindowSize.X / 2.0f, 75 * i);
-                choose[i].Scale = new asd.Vector2DF(1, 1);
-                choose[i].Text = "";
-                layer.AddObject(choose[i]);
-            }
+            // レイヤーに選択肢のインスタンスを追加する
+            for (int i = 0; i < 4; i++) layer.AddObject(choose[i]);
         }
 
         protected override void OnUpdated()
@@ -113,17 +103,36 @@ namespace Game
                 // もし、上ボタンが押されていたら、上の選択肢にする。
                 if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Up) == asd.ButtonState.Push)
                 {
-                    choose[choosenum].Font = font;
+                    //choose[choosenum].Font = font;
+                    choose[choosenum].Scale = new asd.Vector2DF(1, 1);
                     if (0 < choosenum) choosenum--;
+                    choose[choosenum].Scale = new asd.Vector2DF(1.2f, 1.2f);
                 }
 
                 // もし、下ボタンが押されていたら、下の選択肢にする。
                 if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Down) == asd.ButtonState.Push)
                 {
-                    choose[choosenum].Font = font;
+                    //choose[choosenum].Font = font;
+                    choose[choosenum].Scale = new asd.Vector2DF(1, 1);
                     if (choosenum < (choosecount - 1)) choosenum++;
+                    choose[choosenum].Scale = new asd.Vector2DF(1.2f, 1.2f);
                 }
-                choose[choosenum].Font = fontC;
+                //choose[choosenum].Font = fontC;
+                
+
+                for (int i = 0; i < choose.Count; i++)
+                {
+                    if (choose[i].flg)
+                    {
+                        choosenum = i;
+
+                        for (int j = 0; j < choosecount; j++)
+                        {
+                            choose[j].Text = "";
+                        }
+                        choosemode = 2;
+                    }
+                }
 
                 if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Enter) == asd.ButtonState.Push)
                 {
@@ -252,9 +261,11 @@ namespace Game
                     for (int i = 0; i < choosecount; i++)
                     {
                         choose[i].Text = arr[i];
-                        choosenum = 0;
-                        choosemode = 1;
+                        choose[i].size = choose[i].font.CalcTextureSize(arr[i], asd.WritingDirection.Horizontal);
+                        choose[i].CenterPosition = new asd.Vector2DF(choose[i].size.X / 2.0f, choose[i].size.Y / 2.0f);
                     }
+                    choosenum = 0;
+                    choosemode = 1;
                     break;
                 case ']': // 選択肢終了
                     while (texts[nowline] != "@") nowline++;
