@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Button.cs" />
     <Compile Include="CommScene.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SelectScene.cs" />

@@ -17,6 +17,8 @@ namespace Game
         int charanum;
         int levelnum;
 
+        Button b = new Button("auto",100,100);
+
         // ありすとふみかのインスタンスを追加する
         asd.TextureObject2D alice = new asd.TextureObject2D();
         asd.TextureObject2D humika = new asd.TextureObject2D();
@@ -47,6 +49,7 @@ namespace Game
 
             // レイヤーにオブジェクトのインスタンスを追加する
             //layer.AddObject(background);
+            layer.AddObject(b);
 
             // レイヤーにありすのインスタンスを追加する
             chara.Add(alice);
