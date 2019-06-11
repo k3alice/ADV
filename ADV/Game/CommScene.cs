@@ -16,6 +16,11 @@ namespace Game
         int timer = 0;
         asd.TextObject2D state = new asd.TextObject2D();
 
+        // 2Dを表示するレイヤーのインスタンスを生成する
+        asd.Layer2D layer = new asd.Layer2D();
+        asd.Layer2D buttons = new asd.Layer2D();
+        asd.Layer2D config = new asd.Layer2D();
+
         // 会話のキャラ絵、テキストのインスタンスを追加する
         asd.TextureObject2D chara = new asd.TextureObject2D();
         asd.TextObject2D text = new asd.TextObject2D();
@@ -46,11 +51,9 @@ namespace Game
             }
             else Console.WriteLine("baka");
 
-            // 2Dを表示するレイヤーのインスタンスを生成する
-            asd.Layer2D layer = new asd.Layer2D();
-
             // シーンにレイヤーのインスタンスを追加する
             AddLayer(layer);
+            AddLayer(buttons);
             
 
             // フラグ初期化
