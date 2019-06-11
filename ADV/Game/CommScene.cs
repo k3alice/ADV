@@ -51,6 +51,7 @@ namespace Game
 
             // シーンにレイヤーのインスタンスを追加する
             AddLayer(layer);
+            
 
             // フラグ初期化
             autoflag = false;
