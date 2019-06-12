@@ -9,7 +9,7 @@ namespace Game
 {
 	class Program
 	{
-		[System.STAThread]
+        [System.STAThread]
 		static void Main(string[] args)
 		{
             // Altseedを初期化する。
@@ -23,11 +23,8 @@ namespace Game
             asd.Engine.Initialize("Game", (1280 * DispX) / 1536, (745 * DispY) / 864, option);
             //asd.Engine.Initialize("Game", 1980, 1080, new asd.EngineOption());
 
-            // タイトルのシーンのインスタンスを生成する
-            TitleScene scene = new TitleScene();
-
             // シーンを遷移する
-            asd.Engine.ChangeSceneWithTransition(scene, new asd.TransitionFade(0, 1.0f));
+            asd.Engine.ChangeSceneWithTransition(new TitleScene(), new asd.TransitionFade(0, 1.0f));
 
             // Altseedのウインドウが閉じられていないか確認する。
             while (asd.Engine.DoEvents())
