@@ -29,12 +29,14 @@ namespace Game
 
         //
         GameManager manager = new GameManager();
+        bool flg = false;
 
         protected override void OnRegistered()
         {
 
             // シーンにレイヤーのインスタンスを追加する
             AddLayer(layer);
+            AddLayer(manager.confirmation);
 
             // 背景画像を表示するオブジェクトのインスタンスを追加する
             asd.TextureObject2D background = new asd.TextureObject2D();
@@ -82,10 +84,17 @@ namespace Game
                 manager.conftext.Text = "ゲームを終了しますか？";
                 manager.size = manager.font.CalcTextureSize("ゲームを終了しますか？", asd.WritingDirection.Horizontal);
                 manager.conftext.CenterPosition = new asd.Vector2DF(manager.size.X / 2.0f, manager.size.Y / 2.0f);
-                AddLayer(manager.confirmation);
+                manager.yes.Text = "YES";
+                manager.no.Text = "NO";
+
             }
 
-            if(manager.no.clickflg) RemoveLayer(manager.confirmation);
+            if (manager.no.clickflg)
+            {
+                manager.conftext.Text = "";
+                manager.yes.Text = "";
+                manager.no.Text = "";
+            }
         }
     }
 }

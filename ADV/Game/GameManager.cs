@@ -20,10 +20,9 @@ namespace Game
         {
             font = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 35, new asd.Color(255, 255, 255, 255), 1, new asd.Color(255, 255, 255, 255));
             conftext.Font = font;
-            //size = font.CalcTextureSize(text, asd.WritingDirection.Horizontal);
-            //conftext.CenterPosition = new asd.Vector2DF(size.X / 2.0f, size.Y / 2.0f);
             conftext.Position = new asd.Vector2DF(asd.Engine.WindowSize.X / 2.0f, asd.Engine.WindowSize.Y * 0.35f);
-            //conftext.Text = text;
+            yes.Text = "";
+            no.Text = "";
 
             confirmation.AddObject(conftext);
             confirmation.AddObject(yes);
