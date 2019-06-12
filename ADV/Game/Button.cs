@@ -34,7 +34,7 @@ namespace Game
             {
                 Scale = new asd.Vector2DF(1.1f, 1.1f);
                 mouseflg = true;
-                if (asd.Engine.Mouse.LeftButton.ButtonState == asd.ButtonState.Push)
+                if (asd.Engine.Mouse.LeftButton.ButtonState == asd.ButtonState.Push || asd.Engine.Keyboard.GetKeyState(asd.Keys.Enter) == asd.ButtonState.Push)
                 {
                     Console.WriteLine("click");
                     clickflg = true;
