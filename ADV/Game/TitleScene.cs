@@ -27,9 +27,8 @@ namespace Game
         // 2Dを表示するレイヤーのインスタンスを生成する
         asd.Layer2D layer = new asd.Layer2D();
 
-        //
+        // 確認フォーム
         GameManager manager = new GameManager();
-        bool flg = false;
 
         protected override void OnRegistered()
         {
@@ -84,9 +83,20 @@ namespace Game
                 manager.conftext.Text = "ゲームを終了しますか？";
                 manager.size = manager.font.CalcTextureSize("ゲームを終了しますか？", asd.WritingDirection.Horizontal);
                 manager.conftext.CenterPosition = new asd.Vector2DF(manager.size.X / 2.0f, manager.size.Y / 2.0f);
+                manager.order = Order.quit;
                 manager.yes.Text = "YES";
                 manager.no.Text = "NO";
 
+            }
+
+            if (manager.yes.clickflg)
+            {
+                switch (manager.order)
+                {
+                    case Order.quit:
+                        asd.Engine.Terminate();
+                        break;
+                }
             }
 
             if (manager.no.clickflg)

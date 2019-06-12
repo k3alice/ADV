@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Game
 {
+    enum Order { quit = 1, save, load, delete }
+
     class GameManager
     {
         // 確認用ウインドウ
@@ -15,6 +17,7 @@ namespace Game
         public asd.TextObject2D conftext = new asd.TextObject2D();     
         public Button yes = new Button("YES", asd.Engine.WindowSize.X * 0.4f, asd.Engine.WindowSize.Y * 0.2f, 35, new asd.Color(255, 0, 0, 255));
         public Button no = new Button("NO", asd.Engine.WindowSize.X  * 0.6f, asd.Engine.WindowSize.Y * 0.2f, 35, new asd.Color(255, 0, 0, 255));
+        public Order order = 0;
 
         public GameManager()
         {
