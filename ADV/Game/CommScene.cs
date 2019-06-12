@@ -126,7 +126,7 @@ namespace Game
 
                 for (int i = 0; i < choose.Count; i++)
                 {
-                    if (choose[i].flg)
+                    if (choose[i].clickflg)
                     {
                         choosenum = i;
 

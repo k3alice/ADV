@@ -95,13 +95,13 @@ namespace Game
             }
 
             // もし、上ボタンが押されていたら、次のmodeにする。
-            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Up) == asd.ButtonState.Hold && mode > 0)
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Up) == asd.ButtonState.Push && mode > 0)
             {
                 mode--;
             }
 
             // もし、下ボタンが押されていたら、前のmodeにする。
-            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Down) == asd.ButtonState.Hold && mode < 1)
+            if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Down) == asd.ButtonState.Push && mode < 1)
             {
                 mode++;
             }
@@ -149,7 +149,7 @@ namespace Game
 
             for (int i = 0; i < level.Count; i++)
             {
-                if (level[i].flg)
+                if (level[i].clickflg)
                 {
                     mode = 1;
                     levelnum = i;

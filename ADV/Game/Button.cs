@@ -11,9 +11,10 @@ namespace Game
     {
         public asd.Font font;
         public asd.Vector2DI size;
-        public bool flg = false;
+        public bool clickflg = false;
+        public bool mouseflg = false;
         
-        public Button(string text,int x,int y,int fontsize, asd.Color color)
+        public Button(string text,float x,float y,int fontsize, asd.Color color)
         {
             font = asd.Engine.Graphics.CreateDynamicFont(string.Empty, fontsize, color, 1, new asd.Color(255, 255, 255, 255));
             Font = font;
@@ -25,16 +26,18 @@ namespace Game
 
         protected override void OnUpdate()
         {
-            flg = false;
+            clickflg = false;
+            mouseflg = false;
 
             if(asd.Engine.Mouse.Position.X < (Position.X + size.X / 2) && asd.Engine.Mouse.Position.X > (Position.X - size.X / 2) &&
                asd.Engine.Mouse.Position.Y < (Position.Y + size.Y / 2) && asd.Engine.Mouse.Position.Y > (Position.Y - size.Y / 2))
             {
                 Scale = new asd.Vector2DF(1.1f, 1.1f);
+                mouseflg = true;
                 if (asd.Engine.Mouse.LeftButton.ButtonState == asd.ButtonState.Push)
                 {
                     Console.WriteLine("click");
-                    flg = true;
+                    clickflg = true;
                 }
             }
             else Scale = new asd.Vector2DF(1.0f, 1.0f);

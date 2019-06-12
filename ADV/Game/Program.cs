@@ -7,14 +7,21 @@ using System.Reflection;
 
 namespace Game
 {
-
 	class Program
 	{
 		[System.STAThread]
 		static void Main(string[] args)
 		{
-			// Altseedを初期化する。
-			asd.Engine.Initialize("Game", 640, 480, new asd.EngineOption());
+            // Altseedを初期化する。
+            var option = new asd.EngineOption
+            {
+                IsFullScreen = true
+            };
+
+            int DispX = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
+            int DispY = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+            asd.Engine.Initialize("Game", (1280 * DispX) / 1536, (745 * DispY) / 864, option);
+            //asd.Engine.Initialize("Game", 1980, 1080, new asd.EngineOption());
 
             // タイトルのシーンのインスタンスを生成する
             TitleScene scene = new TitleScene();
