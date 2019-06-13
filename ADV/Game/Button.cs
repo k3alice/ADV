@@ -29,7 +29,7 @@ namespace Game
             clickflg = false;
             mouseflg = false;
 
-            if(asd.Engine.Mouse.Position.X < (Position.X + size.X / 2) && asd.Engine.Mouse.Position.X > (Position.X - size.X / 2) &&
+            if (asd.Engine.Mouse.Position.X < (Position.X + size.X / 2) && asd.Engine.Mouse.Position.X > (Position.X - size.X / 2) &&
                asd.Engine.Mouse.Position.Y < (Position.Y + size.Y / 2) && asd.Engine.Mouse.Position.Y > (Position.Y - size.Y / 2))
             {
                 Scale = new asd.Vector2DF(1.1f, 1.1f);
@@ -40,7 +40,11 @@ namespace Game
                     clickflg = true;
                 }
             }
-            else Scale = new asd.Vector2DF(1.0f, 1.0f);
+            else
+            {
+                Font = font;
+                Scale = new asd.Vector2DF(1.0f, 1.0f);
+            }
         }
     }
 }

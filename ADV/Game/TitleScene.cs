@@ -58,26 +58,27 @@ namespace Game
 
         protected override void OnUpdated()
         {
-            // もし、Zキーを押したら{}内の処理を行う
-            if(asd.Engine.Keyboard.GetKeyState(asd.Keys.Z) == asd.ButtonState.Push)
-            {
-                asd.Engine.ChangeSceneWithTransition(new SelectScene(), new asd.TransitionFade(1.0f, 1.0f));
-            }
-
-            // もし、上ボタンが押されていたら、次のmodeにする。
+            // もし、上ボタンが押されていたら、上のボタンにカーソルを合わせる。
             if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Up) == asd.ButtonState.Push && 0 < nowbutton)
             {
                 nowbutton--;
-                System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)buttons[nowbutton].Position.X, (int)buttons[nowbutton].Position.Y + 10);
+                System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)buttons[nowbutton].Position.X, (int)buttons[nowbutton].Position.Y);
             }
 
-            // もし、下ボタンが押されていたら、前のmodeにする。
+            // もし、下ボタンが押されていたら、下のボタンにカーソルを合わせる。
             if (asd.Engine.Keyboard.GetKeyState(asd.Keys.Down) == asd.ButtonState.Push && nowbutton < (buttons.Count - 1))
             {
                 nowbutton++;
-                System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)buttons[nowbutton].Position.X, (int)buttons[nowbutton].Position.Y + 10);
+                System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)buttons[nowbutton].Position.X, (int)buttons[nowbutton].Position.Y);
             }
 
+            // もし、ボタンにカーソルが当たっていたら色を変える。
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                if(buttons[i].mouseflg) buttons[i].Font = asd.Engine.Graphics.CreateDynamicFont(string.Empty, 22, new asd.Color(230,146,171,255), 1, new asd.Color(230, 146, 171, 255));
+            }
+
+            //  EXITがクリックされたら確認ウィンドウを出す(文字をセットする)
             if (exit.clickflg)
             {
                 manager.conftext.Text = "ゲームを終了しますか？";
@@ -89,11 +90,18 @@ namespace Game
 
             }
 
+            // NEWGAMEがクリックされたらゲーム開始
+            if (newgame.clickflg)
+            {
+                asd.Engine.ChangeSceneWithTransition(new CommScene(), new asd.TransitionFade(1.0f, 1.0f));
+            }
+
+            // 確認ウィンドウのYESが押されたとき
             if (manager.yes.clickflg)
             {
                 switch (manager.order)
                 {
-                    case Order.quit:
+                    case Order.quit: // exitならゲーム終了
                         asd.Engine.Terminate();
                         break;
                 }

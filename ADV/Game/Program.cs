@@ -20,7 +20,7 @@ namespace Game
 
             int DispX = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
             int DispY = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
-            asd.Engine.Initialize("Game", (1280 * DispX) / 1536, (745 * DispY) / 864, option);
+            asd.Engine.Initialize("Game", DispX, DispY, option);
             //asd.Engine.Initialize("Game", 1980, 1080, new asd.EngineOption());
 
             // シーンを遷移する
